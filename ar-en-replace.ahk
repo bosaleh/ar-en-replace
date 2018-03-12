@@ -1,13 +1,13 @@
 ;A script that changes arabic text to english text and vice-versa then switches to the language you meant to write in
 ;
-;Instructions: - Highlight the text you want to replace and press alt+q (this hotkey can be changed at line 10)
+;Instructions: 	- Highlight the text you want to replace and press alt+q (this hotkey can be changed at line 10)
 ;
 ;Notes:
 ;		- The script only works if you have exactly two keyboard languages
 
 FileEncoding, UTF-8
 
-LAlt & q:: ;you can change this to whatever you like
+LAlt & [:: ;you can change this to whatever you like
 
 	;store contents of current windows clipboard so it can later be restored
 	oldclip := ClipboardAll
@@ -16,7 +16,7 @@ LAlt & q:: ;you can change this to whatever you like
 	clipboard = 
 	
 	;send cut command
-	Send, {LControl Down}x{LControl Up}
+	Send, {Control Down}x{Control Up}
 	
 	;I forgot why this is important, but it's probably still needed
 	ClipWait, 1
@@ -186,7 +186,7 @@ LAlt & q:: ;you can change this to whatever you like
 		
 		else if(A_LoopField = "ل")
 			SendRaw, g
-		
+	
 		else if(A_LoopField = "ا")
 			;if you meant to type in english, pressing "b" results in "لا", so any instance of "لا" will be changed to "b" by the script instead of "gh", this has the disadvantage of having words like "ghost" changed to "bost"
 			if(previousletter = "ل")
@@ -259,19 +259,13 @@ LAlt & q:: ;you can change this to whatever you like
 	
 Return
 
-;a bunch of replacements that help when trying to switch languages in MS office and other applications
-LShift & LAlt::
-	Send, {LAlt up}{LShift up}{LWin down}{Space}{LWin up}
+;a few replacements that help when trying to switch languages in MS office and other applications
+Shift & Alt::
+	;Windows up needs to be written twice because it gets stuck sometimes
+	Send, {Shift up}{Alt up}{LWin down}{Space}{LWin up}{LWin up}
 Return
 
-RShift & RAlt::
-	Send, {RAlt up}{RShift up}{LWin down}{Space}{LWin up}
-Return
-
-LAlt & LShift::
-	Send, {LAlt up}{LShift up}{LWin down}{Space}{LWin up}
-Return
-
-RAlt & RShift::
-	Send, {RAlt up}{RShift up}{LWin down}{Space}{LWin up}
+Alt & Shift::
+	;Windows up needs to be written twice because it gets stuck sometimes
+	Send, {Shift up}{Alt up}{LWin down}{Space}{LWin up}{LWin up}
 Return
