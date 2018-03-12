@@ -14,6 +14,7 @@ LAlt & [:: ;you can change this to whatever you like
 	
 	;clear clipboard
 	clipboard = 
+	previousletter = 
 	
 	;send cut command
 	Send, {Control Down}x{Control Up}
