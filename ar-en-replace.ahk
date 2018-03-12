@@ -7,7 +7,7 @@
 
 FileEncoding, UTF-8
 
-LAlt & [:: ;you can change this to whatever you like
+LAlt & q:: ;you can change this to whatever you like
 
 	;store contents of current windows clipboard so it can later be restored
 	oldclip := ClipboardAll
