@@ -16,8 +16,13 @@ LAlt & q:: ;you can change this to whatever you like
 	clipboard = 
 	previousletter = 
 	
-	;send cut command
-	Send, {Control Down}x{Control Up}
+	currentKeyboardLang := Format("{1:#x}",DllCall("GetKeyboardLayout", Int,DllCall("GetWindowThreadProcessId", int,WinActive("A"), Int,0)))
+	;send cut command with hamza instead of x if the current keyboard language is one of these Arabic keyboard variants:
+	;                         SA,       Algeria,           Bahrain,  Egypt,    Iraq,     Jordan,   Kuwait,   Lebanon,  Libya,    Morocco,           Oman,     Qatar,    Syria,    Tunisia,           UAE,      Yemen
+	if currentKeyboardLang in 0x4010401,0xfffffffff0291401,0x4013c01,0x4010801,0x4010801,0x4012c01,0x4013401,0x4013001,0x4011001,0xfffffffff0291801,0x4012001,0x4014001,0x4012801,0xfffffffff0291c01,0x4013801,0x4012401
+		Send, {Control Down}ء{Control Up}
+	else
+		Send, {Control Down}x{Control Up}
 	
 	;I forgot why this is important, but it's probably still needed
 	ClipWait, 1
@@ -125,6 +130,9 @@ LAlt & q:: ;you can change this to whatever you like
 		else if(A_LoopField = "m" or A_LoopField = "M")
 			SendRaw, ة
 		
+		else if(A_LoopField = "?")
+			SendRaw, ؟
+
 		else if(A_LoopField = ",")
 			SendRaw, و
 		
@@ -239,7 +247,10 @@ LAlt & q:: ;you can change this to whatever you like
 			
 		else if(A_LoopField = "ظ")
 			SendRaw, /
-		
+				
+		else if(A_LoopField = "؟")
+			SendRaw, ?
+
 		;if they're not letters just paste whatever was in the clipboard
 		else
 			Send, %A_LoopField%
@@ -262,11 +273,9 @@ Return
 
 ;a few replacements that help when trying to switch languages in MS office and other applications
 Shift & Alt::
-	;Windows up needs to be written twice because it gets stuck sometimes
-	Send, {Shift up}{Alt up}{LWin down}{Space}{LWin up}{LWin up}
+	Send, {LWin down}{Space}{LWin up}
 Return
 
 Alt & Shift::
-	;Windows up needs to be written twice because it gets stuck sometimes
-	Send, {Shift up}{Alt up}{LWin down}{Space}{LWin up}{LWin up}
+	Send, {LWin down}{Space}{LWin up}
 Return
